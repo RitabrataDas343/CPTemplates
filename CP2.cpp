@@ -30,61 +30,7 @@ ll mod(ll n)
 }
 void solve()
 {
-    ll n;
-    cin>>n;
-    vector<ll> v(n);
-    scan_vector(v);
-    vector<ll> a(n,0);
-    ll r=-1;
-    for(ll i=n-1;i>=0;i--)
-    {
-        if(v[i]!=0)
-        {
-            r=i;
-            break;
-        }
-    }
-    if(r==-1)
-    YES;
-    else if(r==0)
-    {
-        if(v[0]==0)
-        YES;
-        else NO;
-    }
-    else
-    {
-        if(v[0]==0)
-        {
-            NO;
-            return;
-        }
-        for(ll i=1;i<=r;i++)
-        {
-            v[i]++;
-        }
-        for(ll i=0;i<r;i++)
-        {
-            if(v[i]-a[i]<=0)
-            {
-                NO;
-                return;
-            }
-            else
-            {
-                ll d=v[i]-a[i];
-                a[i]+=d;
-                a[i+1]-=(d-1);
-            }
-        }
-        // print_vector(v);
-        // print_vector(a);
-        if(v==a)
-        YES;
-        else
-        NO;
-    }
-
+    
 }
 int main()
 {

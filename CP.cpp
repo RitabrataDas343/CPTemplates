@@ -28,18 +28,6 @@ ll mod(ll n)
 }
 void solve()
 {
-    ll n,q;
-    cin>>n>>q;
-    vector<ll> v(n);
-    scan_vector(v);
-    vector<ll> seg(4*n,0);
-    buildSegTree(v,seg,0,0,n-1);
-    while (q--)
-    {
-        ll l,r;
-        cin>>l>>r;
-        cout<<query(seg,0,0,n-1,l,r)<<endl;
-    }
 
 }
 
