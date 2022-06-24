@@ -107,6 +107,8 @@ map<ll,ll> primeFactorization(ll n)
     m[n]++;
     return m;
 }
+
+//Segment Tree
 void buildSegTree(vector<ll> &v,vector<ll> &seg,ll n,ll l,ll r)
 {
     //sizeof(seg) = 4*sizeof(v)
@@ -133,3 +135,23 @@ ll query(vector<ll> &seg,ll n,ll low,ll high,ll l, ll r)
     int mid=(low+high)/2;
     return query(seg,2*n+1,low,mid,l,r)+query(seg,2*n+2,mid+1,high,l,r);
 }
+
+
+//DSU
+void unite(ll a,ll b,vector<ll> &par,vector<ll> &sz)
+    {
+        a=getParent(a,par);
+        b=getParent(b,par);
+        if(a==b)
+        return;
+        if(sz[a]<sz[b])
+        swap(a,b);
+        par[b]=a;
+        sz[a]+=sz[b];
+    }
+    ll getParent(ll n,vector<ll> &par)
+    {
+        if(par[n]==n)
+        return n;
+        return par[n]=getParent(par[n],par);
+    }
