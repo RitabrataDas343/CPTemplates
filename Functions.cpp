@@ -109,6 +109,7 @@ map<ll,ll> primeFactorization(ll n)
 }
 
 //Segment Tree
+// TO ACCESS HIGHER AMOUNT OF MEMORY, DECLARE SEGMENT TREES AS GLOBAL
 void buildSegTree(vector<ll> &v,vector<ll> &seg,ll n,ll l,ll r)
 {
     //sizeof(seg) = 4*sizeof(v)
@@ -128,6 +129,8 @@ ll query(vector<ll> &seg,ll n,ll low,ll high,ll l, ll r)
     //l,r - requested ranges
     //n = 0 for root
     //Requested Range must engulf node range
+
+    // Change Returning statement values for queries regarding MAX,MIN (return INT_MAX or INT_MIN)
     if(low>=l && high<=r)
     return seg[n];
     else if(high<l || low>r)
@@ -135,7 +138,23 @@ ll query(vector<ll> &seg,ll n,ll low,ll high,ll l, ll r)
     int mid=(low+high)/2;
     return query(seg,2*n+1,low,mid,l,r)+query(seg,2*n+2,mid+1,high,l,r);
 }
-
+void update(vector<ll> &seg,vector<ll> &v,ll n,ll l,ll r,ll idx,ll val)
+{
+    //idx- index of array to update
+    //val- value (TO BE ADDED,NOT SUBSTITUTED)
+    if(l==r)
+    {
+        v[idx]+=val;
+        seg[n]+=val;
+        return;
+    }
+    ll mid=(l+r)/2;
+    if(idx<=mid)
+    update(seg,v,2*n+1,l,mid,idx,val);
+    else
+    update(seg,v,2*n+2,mid+1,r,idx,val);
+    seg[n]=seg[2*n+1]+seg[2*n+2];
+}
 
 //DSU
 void unite(ll a,ll b,vector<ll> &par,vector<ll> &sz)
