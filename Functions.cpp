@@ -177,8 +177,8 @@ ll getParent(ll n,vector<ll> &par)
     return par[n]=getParent(par[n],par);
 }
 
-//Djikstra's Algorithm
-void djikstra(vector<vector<pair<ll,ll>>> &adj,ll src,ll n)
+//Dijkstra's Algorithm
+void dijkstra(vector<vector<pair<ll,ll>>> &adj,ll src,ll n)
 {
     //Finds shortest distance to all connected nodes from src
     priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> q;
