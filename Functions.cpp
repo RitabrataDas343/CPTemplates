@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define MOD 1000000007
+#define print_vector(v)     for (auto &it: v) { cout<<it<<" "; } cout<<endl;
 typedef long long ll;
 typedef unsigned long long ull;
 
@@ -140,6 +141,7 @@ ll query(vector<ll> &seg,ll n,ll low,ll high,ll l, ll r)
 }
 void update(vector<ll> &seg,vector<ll> &v,ll n,ll l,ll r,ll idx,ll val)
 {
+    //POINT UPDATE
     //idx- index of array to update
     //val- value (TO BE ADDED,NOT SUBSTITUTED)
     if(l==r)
@@ -158,19 +160,48 @@ void update(vector<ll> &seg,vector<ll> &v,ll n,ll l,ll r,ll idx,ll val)
 
 //DSU
 void unite(ll a,ll b,vector<ll> &par,vector<ll> &sz)
+{
+    a=getParent(a,par);
+    b=getParent(b,par);
+    if(a==b)
+    return;
+    if(sz[a]<sz[b])
+    swap(a,b);
+    par[b]=a;
+    sz[a]+=sz[b];
+}
+ll getParent(ll n,vector<ll> &par)
+{
+    if(par[n]==n)
+    return n;
+    return par[n]=getParent(par[n],par);
+}
+
+//Djikstra's Algorithm
+void djikstra(vector<vector<pair<ll,ll>>> &adj,ll src,ll n)
+{
+    //Finds shortest distance to all connected nodes from src
+    priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> q;
+    q.push({0,src});
+    ll d=0,MIN=INT_MAX;
+    vector<bool> hasVisited(n+1,false);
+    vector<ll> shortestDist(n+1,INT_MAX);
+    shortestDist[src]=0;
+    while (!q.empty())
     {
-        a=getParent(a,par);
-        b=getParent(b,par);
-        if(a==b)
-        return;
-        if(sz[a]<sz[b])
-        swap(a,b);
-        par[b]=a;
-        sz[a]+=sz[b];
+        ll x=q.top().second;
+        hasVisited[x]=true;
+        // cout<<x<<endl;
+        d=q.top().first;
+        for(auto i:adj[x])
+        {
+            if(hasVisited[i.first]==false)
+            {
+                shortestDist[i.first]=min(shortestDist[i.first],shortestDist[x]+i.second);
+                q.push({shortestDist[i.first],i.first});
+            }
+        }
+        q.pop();
     }
-    ll getParent(ll n,vector<ll> &par)
-    {
-        if(par[n]==n)
-        return n;
-        return par[n]=getParent(par[n],par);
-    }
+    print_vector(shortestDist);
+}
