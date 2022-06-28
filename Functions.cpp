@@ -157,6 +157,78 @@ void update(vector<ll> &seg,vector<ll> &v,ll n,ll l,ll r,ll idx,ll val)
     update(seg,v,2*n+2,mid+1,r,idx,val);
     seg[n]=seg[2*n+1]+seg[2*n+2];
 }
+void rangeUpdate(vector<ll> &seg,vector<ll> &lazy,vector<ll> &v,ll n,ll low,ll high,ll l,ll r,ll val)
+{
+    //RANGE UPDATE
+    //low,high -seg tree ranges
+    //l,r - requested ranges
+    //n = 0 for root
+    //Requested Range must engulf node range
+    if(lazy[n]!=0)
+    {
+        seg[n]+=(high-low+1)*lazy[n];
+        if(low!=high)
+        {
+            lazy[2*n+1]+=lazy[n];
+            lazy[2*n+2]+=lazy[n];
+        }
+        lazy[n]=0;
+    }
+
+    if(low>r || high<l || low>high)
+    return;
+
+    if(low>=l && high<=r)
+    {
+        seg[n]+=(high-low+1)*val;
+        if(low!=high)
+        {
+            // lazy[2*n+1]+=lazy[n];
+            // lazy[2*n+2]+=lazy[n];
+            lazy[2*n+1]+=val;
+            lazy[2*n+2]+=val;
+        }
+        return;
+    }
+    ll mid=(low+high)/2;
+    rangeUpdate(seg,lazy,v,2*n+1,low,mid,l,r,val);
+    rangeUpdate(seg,lazy,v,2*n+2,mid+1,high,l,r,val);
+    seg[n]=seg[2*n+1]+seg[2*n+2];
+}
+
+ll rangeQueryLazy(vector<ll> &seg,vector<ll> &lazy,vector<ll> &v,ll n,ll low,ll high,ll l,ll r)
+{
+    if(lazy[n]!=0)
+    {
+        seg[n]+=(high-low+1)*lazy[n];
+        if(low!=high)
+        {
+            lazy[2*n+1]+=lazy[n];
+            lazy[2*n+2]+=lazy[n];
+        }
+        lazy[n]=0;
+    }
+
+    if(low>r || high<l)
+    return 0;
+    if(low>=l && high<=r)
+    {
+        if(lazy[n]!=0)
+        {
+            seg[n]+=(high-low+1)*lazy[n];
+            if(low!=high)
+            {
+                lazy[2*n+1]+=lazy[n];
+                lazy[2*n+2]+=lazy[n];
+            }
+            lazy[n]=0;
+        }
+        return seg[n];
+    }
+    ll mid=(low+high)/2;
+    return rangeQueryLazy(seg,lazy,v,2*n+1,low,mid,l,r)+rangeQueryLazy(seg,lazy,v,2*n+2,mid+1,high,l,r);
+
+}
 
 //DSU
 void unite(ll a,ll b,vector<ll> &par,vector<ll> &sz)
