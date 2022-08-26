@@ -26,41 +26,15 @@ ll mod(ll n)
 {
     return ((n%MOD+MOD)%MOD);
 }
-int fun(string &s,int i,int n,int M,int K,vector<vector<int>> &dp)
-{
-    if(i>=n)
-    {
-        if(K==0)
-        return 1;
-        return 0;
-    }
-    // string t="";
-    if(dp[i][K]!=-1)
-    return dp[i][K];
-    char a=s[i];
-    long long ans=0;
-    for(int j=i+M-1;j<n;j++)
-    {
-        // t.push_back(s[j]);
-        char b=s[j];
-        if(a%2==0 && b%2==1)
-        ans=(ans%MOD+fun(s,j+1,n,M,K-1,dp)%MOD)%MOD;
-    }
-    return dp[i][K]=ans;
-}
 void solve()
 {
-    int n,m,k;
-    cin>>n>>m>>k;
-    string s;
-    cin>>s;
-    vector<vector<int>> dp(n,vector<int>(k+1,-1));
-    cout<<fun(s,0,n,m,k,dp)<<endl;
+
 }
 int main()
 {
     
     fastIO(); 
+    cout<<fixed<<setprecision(10);
     #ifndef ONLINE_JUDGE
     freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);
     #endif

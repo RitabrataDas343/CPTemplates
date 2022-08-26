@@ -30,11 +30,11 @@ ll mod(ll n)
 }
 void solve()
 {
-    
 }
 int main()
 {
     fastIO(); 
+    cout<<fixed<<setprecision(10);
     #ifndef ONLINE_JUDGE
     freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);
     #endif
@@ -46,5 +46,5 @@ int main()
         // cout<<"Case #"<<T-t<<": ";
         solve();     
     }
- 
+
 }

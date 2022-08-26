@@ -4,6 +4,15 @@
         "ostream": "cpp",
         "iostream": "cpp",
         "cmath": "cpp",
-        "numeric": "cpp"
+        "numeric": "cpp",
+        "*.tcc": "cpp",
+        "ratio": "cpp",
+        "span": "cpp",
+        "barrier": "cpp",
+        "chrono": "cpp",
+        "latch": "cpp",
+        "limits": "cpp",
+        "semaphore": "cpp",
+        "valarray": "cpp"
     }
 }
