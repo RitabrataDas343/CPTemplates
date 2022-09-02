@@ -277,3 +277,41 @@ void dijkstra(vector<vector<pair<ll,ll>>> &adj,ll src,ll n)
     }
     print_vector(shortestDist);
 }
+
+//LCA using binary lifting and In-out time
+void DFS(vector<vector<ll>> &adj,ll n,ll parent,vector<ll> &in,vector<ll> &out,vector<vector<ll>> &up,ll &timer,int L)
+{
+    in[n]=timer++;
+    up[n][0]=parent;
+    //Set L=log(num) where num is number of nodes in graph
+    for(ll i=1;i<=L;i++)
+    {
+        up[n][i]=up[up[n][i-1]][i-1];
+    }
+    for(auto &i:adj[n])
+    {
+        if(i==parent)
+        continue;
+        DFS(adj,i,n,in,out,up,timer,L);
+    }
+    out[n]=timer++;
+}
+bool isAncestor(ll u,ll v,vector<ll> &in,vector<ll> &out)
+{
+    if(in[u]<in[v] && out[u]>out[v])
+    return 1;
+    return 0;
+}
+ll LCA(vector<vector<ll>> &up,ll u,ll v,vector<ll> &in,vector<ll> &out,ll L)
+{
+    if(isAncestor(u,v,in,out))
+    return u;
+    if(isAncestor(v,u,in,out))
+    return v;
+    for(ll i=L;i>=0;i--)
+    {
+        if(!isAncestor(up[u][i],v,in,out))
+        u=up[u][i];
+    }
+    return up[u][0];
+}
