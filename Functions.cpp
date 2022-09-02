@@ -298,7 +298,7 @@ void DFS(vector<vector<ll>> &adj,ll n,ll parent,vector<ll> &in,vector<ll> &out,v
 }
 bool isAncestor(ll u,ll v,vector<ll> &in,vector<ll> &out)
 {
-    if(in[u]<in[v] && out[u]>out[v])
+    if(in[u]<=in[v] && out[u]>=out[v])
     return 1;
     return 0;
 }
